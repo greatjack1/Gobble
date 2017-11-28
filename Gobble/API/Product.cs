@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Gobble
+namespace Gobble.Api
 {
     /// <summary>
     /// This class represents a product in the api.

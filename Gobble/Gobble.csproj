@@ -8,11 +8,14 @@
     <Folder Include="API\" />
     <Folder Include="Keys\" />
     <Folder Include="Providers\" />
+    <Folder Include="Products\" />
+    <Folder Include="API\Amazon\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="API\Products.cs" />
+    <Compile Remove="API\Product.cs" />
   </ItemGroup>
 </Project>
