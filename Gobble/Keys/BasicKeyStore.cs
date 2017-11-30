@@ -12,7 +12,7 @@ namespace Gobble.Keys
     /// </summary>
     public class BasicKeyStore : IApiKeystore
     {
-        private Dictionary<Provider, String> keys = new Dictionary<Provider, string>();
+        private Dictionary<Provider, Dictionary<String, String>> keys = new Dictionary<Provider, Dictionary<String, String>>();
 
         public BasicKeyStore()
         {
@@ -22,9 +22,9 @@ namespace Gobble.Keys
        /// Adds the key.
        /// </summary>
        /// <param name="provider">Provider. The Provider to associate the key with</param>
-       /// <param name="key">Key. The key for the provider</param>
-        public BasicKeyStore addKey(Provider provider,String key){
-            keys.Add(provider, key);
+       /// <param name="keysForProvider">Key. A dictionary containing key names and values for a provider</param>
+        public BasicKeyStore addKey(Provider provider,Dictionary<String, String> keysForProvider){
+            keys.Add(provider, keysForProvider);
             return this;
         }
         /// <summary>
@@ -32,7 +32,7 @@ namespace Gobble.Keys
         /// </summary>
         /// <returns>The key associated with the provider arguement</returns>
         /// <param name="provider">The Provider to retreive the key for</param>
-        public string getKey(Provider provider)
+        public Dictionary<String, String> getKey(Provider provider)
         {
             return keys[provider];
         }

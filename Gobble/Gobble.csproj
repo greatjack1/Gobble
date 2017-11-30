@@ -13,6 +13,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="Nager.AmazonProductAdvertising" Version="1.0.29" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="API\Products.cs" />

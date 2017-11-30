@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Gobble.Providers;
 namespace Gobble.Keys
 {
@@ -9,6 +10,6 @@ namespace Gobble.Keys
     /// </summary>
     public interface IApiKeystore
     {
-        String getKey(Provider Provider);
+        Dictionary<String,String> getKey(Provider Provider);
     }
 }
