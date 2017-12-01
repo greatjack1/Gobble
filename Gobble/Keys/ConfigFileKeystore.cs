@@ -14,7 +14,8 @@ namespace Gobble.Keys
         private Dictionary<Provider, Dictionary<String, String>> keys = new Dictionary<Provider, Dictionary<String,String>>();
         private String path = System.IO.Directory.GetCurrentDirectory() + "/keys.xml";
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:Gobble.Keys.ConfigFileKeystore"/> class.
+        /// Initializes a new instance of the <see cref="T:Gobble.Keys.ConfigFileKeystore"/> class. Using the default
+        /// path which is the currentdirectory with a keys.xml file
         /// </summary>
         public ConfigFileKeystore()
         {
@@ -40,7 +41,14 @@ namespace Gobble.Keys
                 //if the element name a provider, then add that provider and the key to the dictionary
                 foreach(Provider prov in Enum.GetValues(typeof(Provider))){
                     if(node.Name==prov.ToString()){
-                        keys.Add(prov, node.Attributes.GetNamedItem(""));
+                        //create a dictionary to hold the keyname and values for that provider
+                        Dictionary<String, String> providerKeys = new Dictionary<string, string>();
+                        //loop through each node to get a list of keynames and values
+                        foreach (XmlNode childNode in node.ChildNodes) {
+                            providerKeys.Add(childNode.Name, childNode.InnerText);
+                        }
+                        //add the keys and the provider name to the dictionary
+                        keys.Add(prov, providerKeys);
                         //break out of the for loop since we found a macth
                         break;
                     }
