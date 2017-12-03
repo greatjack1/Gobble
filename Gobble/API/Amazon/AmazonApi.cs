@@ -35,6 +35,7 @@ namespace Gobble.API.Amazon
             foreach(var item in response.Items.Item){
               
             }
+            return null;
         }
         /// <summary>
         /// Sets the API keys.

@@ -1,7 +1,10 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gobble", "Gobble\Gobble.csproj", "{44DD0BBE-0962-4B62-A0F3-9D4F44A0F83C}"
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2009
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gobble", "Gobble\Gobble.csproj", "{44DD0BBE-0962-4B62-A0F3-9D4F44A0F83C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gobbleTests", "gobbleTests\gobbleTests.csproj", "{04437985-C9BF-4DF2-ABD3-6D0AEC3F8FC2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,5 +16,15 @@ Global
 		{44DD0BBE-0962-4B62-A0F3-9D4F44A0F83C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44DD0BBE-0962-4B62-A0F3-9D4F44A0F83C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44DD0BBE-0962-4B62-A0F3-9D4F44A0F83C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04437985-C9BF-4DF2-ABD3-6D0AEC3F8FC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04437985-C9BF-4DF2-ABD3-6D0AEC3F8FC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04437985-C9BF-4DF2-ABD3-6D0AEC3F8FC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04437985-C9BF-4DF2-ABD3-6D0AEC3F8FC2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {35E6D9D5-59C8-48DD-86CD-44893B4B6F4C}
 	EndGlobalSection
 EndGlobal
