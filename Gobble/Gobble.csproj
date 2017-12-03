@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Folder Include="API\" />
-    <Folder Include="Keys\" />
     <Folder Include="Providers\" />
     <Folder Include="Products\" />
     <Folder Include="API\Amazon\" />
