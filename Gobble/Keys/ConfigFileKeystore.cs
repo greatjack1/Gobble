@@ -12,14 +12,15 @@ namespace Gobble.Keys
     public class ConfigFileKeystore : IApiKeystore
     {
         private Dictionary<Provider, Dictionary<String, String>> keys = new Dictionary<Provider, Dictionary<String,String>>();
-        private String path = System.IO.Directory.GetCurrentDirectory() + "/keys.xml";
+        private String path = System.IO.Directory.GetCurrentDirectory() + "\\keys.xml";
         /// <summary>
         /// Initializes a new instance of the <see cref="T:Gobble.Keys.ConfigFileKeystore"/> class. Using the default
         /// path which is the currentdirectory with a keys.xml file
         /// </summary>
         public ConfigFileKeystore()
         {
-            
+
+            readKeys();
         }
         /// <summary>
         /// Initializes a new instance of the <see cref="T:Gobble.Keys.ConfigFileKeystore"/> class.
@@ -28,11 +29,12 @@ namespace Gobble.Keys
         public ConfigFileKeystore(String filePath)
         {
             path = filePath;
+            readKeys();
         }
 
         private void readKeys(){
-            //if the path doesnt exist through a file not found exception
-            if(!Directory.Exists(path)){
+          //  if the path doesnt exist through a file not found exception
+            if(!File.Exists(path)){
                 throw new FileNotFoundException();
             }
             XmlDocument doc = new XmlDocument();
