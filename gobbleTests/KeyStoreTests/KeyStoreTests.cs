@@ -24,6 +24,24 @@ namespace gobbleTests
             Assert.Equal(amazonKeyOne, "12345");
             Assert.Equal(amazonKeyTwo, "12345678");
         }
+        [Fact]
+        public void TestKeysFileCreator()
+        {
+            //Arrange
+            KeysFileCreator creator = new Gobble.Keys.KeysFileCreator();
+            Dictionary<String, String> keys = new Dictionary<string, string>();
+            keys.Add("testkeyone", "12345");
+            keys.Add("testkeytwo", "123456789");
+            List<Dictionary<String, String>> keysList = new List<Dictionary<string, string>>();
+            keysList.Add(keys);
+            List<Provider> providers = new List<Provider>();
+            providers.Add(Provider.Amazon);
+            creator.addProviderAndKeys(providers, keysList);
+            //Act
+            bool created = creator.createKeysFile();
+            //Assert
+            Assert.Equal(created, true);
+        }
 
         [Fact]
         public void TestConfigFileKeystore()

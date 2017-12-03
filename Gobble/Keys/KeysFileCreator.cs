@@ -10,7 +10,7 @@ namespace Gobble.Keys
     /// <summary>
     /// A helper class to create the keys.xml file require by the application
     /// </summary>
-    class KeysFileCreator
+   public class KeysFileCreator
     {
         private String path = Directory.GetCurrentDirectory() + "\\keys.xml";
         private List<Provider> providers;
@@ -49,13 +49,21 @@ namespace Gobble.Keys
             foreach (Provider prov in providers)
             { 
                 XmlElement subElement = doc.CreateElement(string.Empty, prov.ToString(), string.Empty);
-                element1.AppendChild(element1);
+                element1.AppendChild(subElement);
                 foreach (KeyValuePair<string, string> entry in keys[numUpTo])
                 {
-                    
+                    //create a xml node with a sub textnode that has the api key and value
+                    XmlElement child = doc.CreateElement(string.Empty, entry.Key.ToString(), string.Empty);
+                    XmlText text = doc.CreateTextNode(entry.Value);
+                    child.AppendChild(text);
+                    //add this child elemnent to the provider element
+                    subElement.AppendChild(child);
                 }
                 numUpTo++;
             }
+            //save the file
+            doc.Save(path);
+            return true;
         }
     }
 }
