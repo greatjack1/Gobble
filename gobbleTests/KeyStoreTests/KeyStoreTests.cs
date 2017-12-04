@@ -4,6 +4,8 @@ using Gobble.Keys;
 using Gobble.Providers;
 using System.Collections.Generic;
 using System.IO;
+using Gobble.API.Amazon;
+
 namespace gobbleTests
 {
     public class KeyStoreTests

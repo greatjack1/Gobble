@@ -11,27 +11,27 @@ namespace Gobble.API.Amazon
 
         public string getCurrenCurrency()
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public string getDescription()
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public string getName()
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public double getPrice()
         {
-            throw new NotImplementedException();
+            return 0.0;
         }
 
         public string getUPC()
         {
-            throw new NotImplementedException();
+            return null;
         }
     }
 }

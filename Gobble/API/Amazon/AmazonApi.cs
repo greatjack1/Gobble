@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Gobble.Products;
 using Nager.AmazonProductAdvertising;
+using Nager.AmazonProductAdvertising.Model;
 
 namespace Gobble.API.Amazon
 {
@@ -18,7 +19,7 @@ namespace Gobble.API.Amazon
         /// </summary>
         public AmazonApi()
         {
-            
+         
         }
         /// <summary>
         /// Queries the products.
@@ -31,9 +32,12 @@ namespace Gobble.API.Amazon
             auth.AccessKey = accessKey;
             auth.SecretKey = secretKey;
             AmazonWrapper wrapper = new AmazonWrapper(auth, AmazonEndpoint.US, "wyrecorp-20");
+            Console.WriteLine("Test2");
            var response = wrapper.Lookup(itemUPC);
             foreach(var item in response.Items.Item){
-              
+                foreach (Offer offer in item.Offers.Offer){
+                    Console.WriteLine(offer.OfferListing[0].Price.FormattedPrice);
+                }
             }
             return null;
         }

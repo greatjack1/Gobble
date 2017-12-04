@@ -16,4 +16,7 @@
     <ProjectReference Include="..\Gobble\Gobble.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="AmazonTests\" />
+  </ItemGroup>
 </Project>
