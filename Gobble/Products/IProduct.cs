@@ -3,11 +3,13 @@ namespace Gobble.Products
 {
     public interface IProduct
     {
-        String getName();
-        String getDescription();
-        double getPrice();
-        String getCurrenCurrency();
-        String getUPC();
+        String Name { get; set; }
+        String Description { get; set; }
+        String Condition { get; set; }
+        double Price { get; set; }
+        String FormattedPrice { get; set; }
+        String CurrentCurrency { get; set; }
+        String UPC { get; set; }
 
     }
 }
