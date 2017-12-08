@@ -15,7 +15,7 @@ namespace gobbleTests
             //Arrange
             AmazonApi api = new AmazonApi();
             api.setApiKeys(new ConfigFileKeystore().getKey(Provider.Amazon));
-            api.setUPC("885909258802");
+            api.setUPC("033317198658");
             //Act
             //display the data for the test
             foreach (IProduct prod in api.queryProducts()) {

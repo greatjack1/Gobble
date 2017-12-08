@@ -10,6 +10,6 @@ namespace Gobble.Products
         String FormattedPrice { get; set; }
         String CurrentCurrency { get; set; }
         String UPC { get; set; }
-
+        String Url { get; set; }
     }
 }

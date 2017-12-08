@@ -36,51 +36,73 @@ namespace Gobble.API.Amazon
             //create the list to store the amazon products
             List<IProduct> products = new List<IProduct>();
             var response = wrapper.Lookup(itemUPC);
+            //if the item array is null then there are no items to retreive and return the prodcuts list blank
+            if (response.Items is null) {
+                return products;
+            }
             foreach (var item in response.Items.Item)
             {
-                //create three products to represent the lowest new, lowest used, and lowest refurbished
-                AmazonProduct product = new AmazonProduct();
-                AmazonProduct productUsed = new AmazonProduct();
-                AmazonProduct productRefurb = new AmazonProduct();
-                product.Name = item.ItemAttributes.Title;
-                productUsed.Name = item.ItemAttributes.Title;
-                productRefurb.Name = item.ItemAttributes.Title;
-                //parse all of the item features together to create a description
+                //parse all of the item features together to create a description for the product
                 String desc = "";
                 foreach (String line in item.ItemAttributes.Feature)
                 {
                     desc = desc + line + Environment.NewLine;
                 }
-                product.Description = desc;
-                productUsed.Description = desc;
-                productRefurb.Description = desc;
-                product.UPC = item.ItemAttributes.UPC;
-                productUsed.UPC = item.ItemAttributes.UPC;
-                productRefurb.UPC = item.ItemAttributes.UPC;
-                //set the conditions based on the product type
-                product.Condition = "New";
-                productUsed.Condition = "Used";
-                productRefurb.Condition = "Refurbished";
-                //set the prices for the products from the lowest offers section
-                product.Price = Double.Parse(item.OfferSummary.LowestNewPrice.Amount);
-                productUsed.Price = Double.Parse(item.OfferSummary.LowestUsedPrice.Amount);
-                productRefurb.Price = Double.Parse(item.OfferSummary.LowestRefurbishedPrice.Amount);
-                //set the formatted price for each item
-                product.FormattedPrice = item.OfferSummary.LowestNewPrice.FormattedPrice;
-                productUsed.FormattedPrice = item.OfferSummary.LowestUsedPrice.FormattedPrice;
-                productRefurb.FormattedPrice = item.OfferSummary.LowestRefurbishedPrice.FormattedPrice;
-                //set the currency for each price
-                product.CurrentCurrency = item.OfferSummary.LowestNewPrice.CurrencyCode;
-                productUsed.CurrentCurrency = item.OfferSummary.LowestUsedPrice.CurrencyCode;
-                productRefurb.CurrentCurrency = item.OfferSummary.LowestRefurbishedPrice.CurrencyCode;
-                //add the three products to the list
-                products.Add(product);
-                products.Add(productUsed);
-                products.Add(productRefurb);
+                //create the new product only if the lowest price for this version of the product is not null, because if it null that means that there is no price
+                if (!(item.OfferSummary.LowestNewPrice is null)) {
+                    AmazonProduct product = new AmazonProduct
+                    {
+                        Name = item.ItemAttributes.Title ?? "No Title Available",
+                        Description = desc ?? "No Description Available",
+                        UPC = item.ItemAttributes.UPC ?? "No UPC Available",
+                        Condition = "New" ?? "No Condition Available",
+                        Price = Double.Parse(item.OfferSummary.LowestNewPrice.Amount),
+                        FormattedPrice = item.OfferSummary.LowestNewPrice.FormattedPrice ?? "No Formatted Price Available",
+                        CurrentCurrency = item.OfferSummary.LowestNewPrice.CurrencyCode ?? "No Currency Code Available",
+                        Url = item.DetailPageURL ?? "No Url Available"
+                    };
+                    products.Add(product);
+                }
+                if (!(item.OfferSummary.LowestUsedPrice is null))
+                {
+                    AmazonProduct productUsed = new AmazonProduct
+                    {
+                        Name = item.ItemAttributes.Title ?? "No Title Available",
+                        Description = desc ?? "No Description Available",
+                        Condition = "Used" ?? "No Condition Available",
+                        UPC = item.ItemAttributes.UPC ?? "No UPC Available",
+                        Price = Double.Parse(item.OfferSummary.LowestUsedPrice.Amount),
+                        FormattedPrice = item.OfferSummary.LowestUsedPrice.FormattedPrice ?? "No Formatted Price Available",
+                        CurrentCurrency = item.OfferSummary.LowestUsedPrice.CurrencyCode,
+                        Url = item.DetailPageURL ?? "No Url Available"
+                    };
+                    products.Add(productUsed);
+                }
+                if (!(item.OfferSummary.LowestRefurbishedPrice is null))
+                {
+                    AmazonProduct productRefurb = new AmazonProduct
+                    {
+                        Name = item.ItemAttributes.Title ?? "No Title Available",
+                        Description = desc ?? "No Description Available",
+                        UPC = item.ItemAttributes.UPC ?? "No UPC Available",
+                        //set the conditions based on the product type
+                        Condition = "Refurbished" ?? "No Condition Available",
+                        //set the prices for the products from the lowest offers section
+                        Price = Double.Parse(item.OfferSummary.LowestRefurbishedPrice.Amount),
+                        //set the formatted price for each item      
+                        FormattedPrice = item.OfferSummary.LowestRefurbishedPrice.FormattedPrice ?? "No Formatted Price Available",
+                        //set the currency for each price           
+                        CurrentCurrency = item.OfferSummary.LowestRefurbishedPrice.CurrencyCode ?? "No Currency Code Available",
+                        Url = item.DetailPageURL ?? "No Url Available"
+                    };
+                    //add the three products to the list           
+                    products.Add(productRefurb);
+                }
             }
             return products;
         }
 
+   
        
         /// <summary>
         /// Sets the API keys.
