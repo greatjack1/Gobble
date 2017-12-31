@@ -19,7 +19,7 @@ namespace Gobble.API.Ebay
             request.Method = "GET";
  
             //Get the response
-            WebResponse wr = await request.GetResponseAsync();
+            WebResponse wr =  request.GetResponse();
             Stream receiveStream = wr.GetResponseStream();
             StreamReader reader = new StreamReader(receiveStream, Encoding.UTF8);
             return reader.ReadToEnd();
