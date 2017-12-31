@@ -29,14 +29,42 @@ namespace Gobble.API
             return this;
         }
         public async Task<List<IProduct>> getProductsAsync() {
-            
-            return null;
+            Task<List<IProduct>> task = new Task<List<IProduct>>(() =>
+            {
+                List<IProduct> products = new List<IProduct>();
+                foreach (Provider prov in mProviders)
+                {
+                    switch (prov)
+                    {
+                        case Provider.Amazon:
+                            IProvider provider = new Amazon.AmazonApi();
+                            provider.setApiKeys(keystore.getKey(Provider.Amazon));
+                            provider.setUPC(mUPC);
+                            products.AddRange(provider.queryProducts());
+                            break;
+                        case Provider.Jet:
+                            break;
+                        case Provider.Kohls:
+                            break;
+                        case Provider.Target:
+                            break;
+                        case Provider.Walmart:
+                            break;
+
+                    }
+                }
+                return products;
+            });
+            task.Start();
+            await Task.WhenAll(task);
+            return task.Result;
         }
         public List<IProduct> getProducts() {
             List<IProduct> products = new List<IProduct>();
             foreach (Provider prov in mProviders)
             {
-                switch (prov) {
+                switch (prov)
+                {
                     case Provider.Amazon:
                         IProvider provider = new Amazon.AmazonApi();
                         provider.setApiKeys(keystore.getKey(Provider.Amazon));

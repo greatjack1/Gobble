@@ -12,7 +12,7 @@ namespace Gobble.API.Ebay
     {
         private Dictionary<String, String> mKeys;
         private String mUPC;
-        public async Task<String> getRequestDataAsync() {
+        public  String getRequestDataAsync() {
             
             //Create request
             WebRequest request = WebRequest.Create("http://open.api.ebay.com/shopping?callname=FindProducts&responseencoding=XML&appid=" + mKeys["appid"] + "&ProductID.Type=UPC­&ProductID.Value=7" + mUPC);
