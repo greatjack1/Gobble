@@ -11,5 +11,6 @@ namespace Gobble.Products
         String CurrentCurrency { get; set; }
         String UPC { get; set; }
         String Url { get; set; }
+        String Merchant { get; set; }
     }
 }

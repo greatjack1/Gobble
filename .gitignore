@@ -3,6 +3,8 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+#the playground program since it includes private api keys
+GobblePlayground/Program.cs
 # User-specific files
 *.suo
 *.user
@@ -23,6 +25,7 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
+
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/

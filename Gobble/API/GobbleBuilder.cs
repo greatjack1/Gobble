@@ -42,6 +42,12 @@ namespace Gobble.API
                             provider.setUPC(mUPC);
                             products.AddRange(provider.queryProducts());
                             break;
+                        case Provider.Ebay:
+                            IProvider EbayProvider = new Ebay.EbayApi();
+                            EbayProvider.setApiKeys(keystore.getKey(Provider.Ebay));
+                            EbayProvider.setUPC(mUPC);
+                            products.AddRange(EbayProvider.queryProducts());
+                            break;
                         case Provider.Jet:
                             break;
                         case Provider.Kohls:
@@ -70,6 +76,12 @@ namespace Gobble.API
                         provider.setApiKeys(keystore.getKey(Provider.Amazon));
                         provider.setUPC(mUPC);
                         products.AddRange(provider.queryProducts());
+                        break;
+                    case Provider.Ebay:
+                        IProvider EbayProvider = new Ebay.EbayApi();
+                        EbayProvider.setApiKeys(keystore.getKey(Provider.Ebay));
+                        EbayProvider.setUPC(mUPC);
+                        products.AddRange(EbayProvider.queryProducts());
                         break;
                     case Provider.Jet:
                         break;

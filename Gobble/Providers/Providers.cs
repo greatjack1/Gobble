@@ -7,6 +7,6 @@ namespace Gobble.Providers
     /// </summary>
     public enum Provider
     {
-        Amazon,Walmart,Target,Jet,Kohls
+        Amazon,Walmart,Target,Jet,Kohls,Ebay
     }
 }

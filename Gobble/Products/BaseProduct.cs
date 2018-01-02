@@ -15,6 +15,7 @@ namespace Gobble.Products
         private String mCurrentCurrency;
         private String mUPC;
         private String mURL;
+        private String mMerchant;
         public BaseProduct() { }
 
         //implementaion of all properties
@@ -26,5 +27,6 @@ namespace Gobble.Products
         public string UPC { get => mUPC; set => mUPC = value; }
         public string Url { get => mURL; set => mURL = value; }
         public string Name { get => mName; set => mName = value; }
+        public string Merchant { get => mMerchant; set => mMerchant= value; }
     }
 }

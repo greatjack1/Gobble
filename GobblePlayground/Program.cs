@@ -1,10 +1,10 @@
 ﻿using System;
 using Gobble.Keys;
+using System.Linq;
 using System.Collections.Generic;
 using Gobble.API;
 using Gobble.Providers;
 using System.Threading.Tasks;
-
 namespace GobblePlayground
 {
     class Program
@@ -13,12 +13,29 @@ namespace GobblePlayground
         {
             Console.WriteLine("Running Gobble Playground");
             List<Provider> providers = new List<Provider>();
-            providers.Add(Provider.Amazon);
+            providers.Add(Provider.Ebay);
             Dictionary<String, String> keys = new Dictionary<string, string>();
             BasicKeyStore store = new BasicKeyStore();
-            store.addKey(Gobble.Providers.Provider.Amazon, keys);
-            var products = await new GobbleBuilder().addKeystore(store).addProviderList(providers).setUPC("888462762670").getProductsAsync();
+            store.addKey(Gobble.Providers.Provider.Ebay, keys);
+            var products =  new GobbleBuilder().addKeystore(store).addProviderList(providers).setUPC("888462762670").getProducts();
             Console.WriteLine("Writing products");
+            //sort by price
+            products.Sort((n, m) =>
+            {
+                if (n.Price > m.Price)
+                {
+                    return 1;
+                }
+                else if (n.Price < m.Price)
+                {
+                    return -1;
+                }
+                else
+                {
+                    return 0;
+                }
+            });
+            //display them
             foreach (var prod in products) {
                 Console.WriteLine("Name: " + prod.Name + " Price:" + prod.Price + " Condition: " + prod.Condition);
             }

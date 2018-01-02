@@ -53,9 +53,10 @@ namespace Gobble.API.Amazon
                     AmazonProduct product = new AmazonProduct
                     {
                         Name = item.ItemAttributes.Title ?? "No Title Available",
+                        Merchant = "Amazon",
                         Description = desc ?? "No Description Available",
                         UPC = item.ItemAttributes.UPC ?? "No UPC Available",
-                        Condition = "New" ?? "No Condition Available",
+                        Condition = "New",
                         Price = Double.Parse(item.OfferSummary.LowestNewPrice.Amount),
                         FormattedPrice = item.OfferSummary.LowestNewPrice.FormattedPrice ?? "No Formatted Price Available",
                         CurrentCurrency = item.OfferSummary.LowestNewPrice.CurrencyCode ?? "No Currency Code Available",
@@ -68,8 +69,9 @@ namespace Gobble.API.Amazon
                     AmazonProduct productUsed = new AmazonProduct
                     {
                         Name = item.ItemAttributes.Title ?? "No Title Available",
+                        Merchant = "Amazon",
                         Description = desc ?? "No Description Available",
-                        Condition = "Used" ?? "No Condition Available",
+                        Condition = "Used",
                         UPC = item.ItemAttributes.UPC ?? "No UPC Available",
                         Price = Double.Parse(item.OfferSummary.LowestUsedPrice.Amount),
                         FormattedPrice = item.OfferSummary.LowestUsedPrice.FormattedPrice ?? "No Formatted Price Available",
@@ -83,10 +85,11 @@ namespace Gobble.API.Amazon
                     AmazonProduct productRefurb = new AmazonProduct
                     {
                         Name = item.ItemAttributes.Title ?? "No Title Available",
+                        Merchant = "Amazon",
                         Description = desc ?? "No Description Available",
                         UPC = item.ItemAttributes.UPC ?? "No UPC Available",
                         //set the conditions based on the product type
-                        Condition = "Refurbished" ?? "No Condition Available",
+                        Condition = "Refurbished",
                         //set the prices for the products from the lowest offers section
                         Price = Double.Parse(item.OfferSummary.LowestRefurbishedPrice.Amount),
                         //set the formatted price for each item      
