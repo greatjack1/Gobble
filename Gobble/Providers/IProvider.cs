@@ -8,6 +8,6 @@ namespace Gobble.Providers
     {
         void setApiKeys(Dictionary<String, String> keys);
         void setUPC(String upc);
-        List<IProduct> queryProducts();
+        List<IProduct> QueryProducts();
     }
 }

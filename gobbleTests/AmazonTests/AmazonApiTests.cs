@@ -18,7 +18,7 @@ namespace gobbleTests
             api.setUPC("033317198658");
             //Act
             //display the data for the test
-            foreach (IProduct prod in api.queryProducts()) {
+            foreach (IProduct prod in api.QueryProducts()) {
                System.Diagnostics.Trace.WriteLine("Product Information:" + prod.Name + " " + prod.Price + " " + prod.Condition + " " + prod.Description + " " + prod.FormattedPrice + " " + prod.CurrentCurrency + " " + prod.UPC);
             }
             //Assert

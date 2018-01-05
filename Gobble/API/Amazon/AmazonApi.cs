@@ -27,7 +27,7 @@ namespace Gobble.API.Amazon
         /// </summary>
         /// <returns>The products.</returns>
 
-        public List<IProduct> queryProducts()
+        public List<IProduct> QueryProducts()
         {
             AmazonAuthentication auth = new AmazonAuthentication();
             auth.AccessKey = accessKey;

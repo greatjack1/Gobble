@@ -16,56 +16,47 @@ namespace Gobble.API
         {
             
         }
-        public GobbleBuilder addProviderList(List<Provider> providers){
+        public GobbleBuilder AddProviderList(List<Provider> providers){
             mProviders = providers;
             return this;
         }
-        public GobbleBuilder addKeystore(IApiKeystore store){
+        public GobbleBuilder AddKeystore(IApiKeystore store){
             keystore = store;
             return this;
         }
-        public GobbleBuilder setUPC(String UPC) {
+        public GobbleBuilder SetUPC(String UPC) {
             mUPC = UPC;
             return this;
         }
-        public async Task<List<IProduct>> getProductsAsync() {
+        /// <summary>
+        /// This is the Async version of the GetProducts method
+        /// It is used to retreive prices of a item using the upc, provider list and api keys that were provided
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<IProduct>> GetProductsAsync() {
             Task<List<IProduct>> task = new Task<List<IProduct>>(() =>
             {
-                List<IProduct> products = new List<IProduct>();
-                foreach (Provider prov in mProviders)
-                {
-                    switch (prov)
-                    {
-                        case Provider.Amazon:
-                            IProvider provider = new Amazon.AmazonApi();
-                            provider.setApiKeys(keystore.getKey(Provider.Amazon));
-                            provider.setUPC(mUPC);
-                            products.AddRange(provider.queryProducts());
-                            break;
-                        case Provider.Ebay:
-                            IProvider EbayProvider = new Ebay.EbayApi();
-                            EbayProvider.setApiKeys(keystore.getKey(Provider.Ebay));
-                            EbayProvider.setUPC(mUPC);
-                            products.AddRange(EbayProvider.queryProducts());
-                            break;
-                        case Provider.Jet:
-                            break;
-                        case Provider.Kohls:
-                            break;
-                        case Provider.Target:
-                            break;
-                        case Provider.Walmart:
-                            break;
-
-                    }
-                }
-                return products;
+                return InternalGetProducts();
             });
             task.Start();
             await Task.WhenAll(task);
             return task.Result;
         }
-        public List<IProduct> getProducts() {
+        /// <summary>
+        /// This is the reguler version of the GetProducts method
+        ///  It is used to retreive prices of a item using the upc, provider list and api keys that were provided
+        /// </summary>
+        /// <returns></returns>
+        public List<IProduct> GetProducts() {
+            return InternalGetProducts();
+        }
+        /// <summary>
+        /// This is a internal class method that is used to get the products.
+        /// It is sperated from the public method to allow two versions of the public method to use this functionality
+        /// We require to versions of the public method so that we can make one Async for people using the api in such patterns
+        /// </summary>
+        /// <returns></returns>
+        private List<IProduct> InternalGetProducts() {
             List<IProduct> products = new List<IProduct>();
             foreach (Provider prov in mProviders)
             {
@@ -75,13 +66,13 @@ namespace Gobble.API
                         IProvider provider = new Amazon.AmazonApi();
                         provider.setApiKeys(keystore.getKey(Provider.Amazon));
                         provider.setUPC(mUPC);
-                        products.AddRange(provider.queryProducts());
+                        products.AddRange(provider.QueryProducts());
                         break;
                     case Provider.Ebay:
                         IProvider EbayProvider = new Ebay.EbayApi();
                         EbayProvider.setApiKeys(keystore.getKey(Provider.Ebay));
                         EbayProvider.setUPC(mUPC);
-                        products.AddRange(EbayProvider.queryProducts());
+                        products.AddRange(EbayProvider.QueryProducts());
                         break;
                     case Provider.Jet:
                         break;
@@ -95,15 +86,8 @@ namespace Gobble.API
                 }
             }
             return products;
+
         }
-        /// <summary>
-        /// Gets the product results.
-        /// This method when called executes the query.
-        /// It goes thorugh all providers, gets the products and returns the reponses in the form of List<IProduct>
-        /// </summary>
-        /// <returns>The product results.</returns>
-        public List<IProduct> GetProductResults(){
-            return null;
-        }
+       
     }
 }

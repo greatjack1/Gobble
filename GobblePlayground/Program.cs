@@ -9,15 +9,16 @@ namespace GobblePlayground
 {
     class Program
     {
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
             Console.WriteLine("Running Gobble Playground");
             List<Provider> providers = new List<Provider>();
             providers.Add(Provider.Ebay);
             Dictionary<String, String> keys = new Dictionary<string, string>();
+        
             BasicKeyStore store = new BasicKeyStore();
             store.addKey(Gobble.Providers.Provider.Ebay, keys);
-            var products =  new GobbleBuilder().addKeystore(store).addProviderList(providers).setUPC("888462762670").getProducts();
+            var products =  new GobbleBuilder().AddKeystore(store).AddProviderList(providers).SetUPC("888462762670").GetProducts();
             Console.WriteLine("Writing products");
             //sort by price
             products.Sort((n, m) =>
