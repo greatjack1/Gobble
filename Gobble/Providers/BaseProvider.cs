@@ -10,14 +10,12 @@ namespace Gobble.Providers
     /// <summary>
     /// A base implementation of a provider that can be used as a boiler plate for adding other providers to the api
     /// </summary>
-    class BaseProvider : IProvider
+    abstract class BaseProvider : IProvider
     {
         protected string mUPC = "";
         protected Dictionary<string, string> mKeys;
-        public virtual List<IProduct> QueryProducts()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract List<IProduct> QueryProducts();
+        
 
         public virtual void setApiKeys(Dictionary<string, string> keys)
         {

@@ -81,6 +81,10 @@ namespace Gobble.API
                     case Provider.Target:
                         break;
                     case Provider.Walmart:
+                        IProvider WalmartProvider = new Walmart.WalmartApi();
+                        WalmartProvider.setApiKeys(keystore.getKey(Provider.Walmart));
+                       WalmartProvider.setUPC(mUPC);
+                        products.AddRange(WalmartProvider.QueryProducts());
                         break;
 
                 }
