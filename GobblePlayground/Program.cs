@@ -18,7 +18,7 @@ namespace GobblePlayground
           
             BasicKeyStore store = new BasicKeyStore();
             store.addKey(Gobble.Providers.Provider.Walmart, keys);
-            var products =  new GobbleBuilder().AddKeystore(store).AddProviderList(providers).SetUPC("888462dsfdsf762670").GetProducts();
+            var products =  new GobbleBuilder().AddKeystore(store).AddProviderList(providers).SetUPC("888462762670").GetProducts();
             Console.WriteLine("Writing products");
             //sort by price
             products.Sort((n, m) =>
