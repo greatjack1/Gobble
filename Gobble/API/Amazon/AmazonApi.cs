@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Gobble.Products;
 using Nager.AmazonProductAdvertising;
 using Nager.AmazonProductAdvertising.Model;
@@ -29,80 +30,100 @@ namespace Gobble.API.Amazon
 
         public List<IProduct> QueryProducts()
         {
-            AmazonAuthentication auth = new AmazonAuthentication();
-            auth.AccessKey = accessKey;
-            auth.SecretKey = secretKey;
-            AmazonWrapper wrapper = new AmazonWrapper(auth, AmazonEndpoint.US, "wyrecorp-20");
             //create the list to store the amazon products
             List<IProduct> products = new List<IProduct>();
-            var response = wrapper.Lookup(itemUPC);
-            //if the item array is null then there are no items to retreive and return the prodcuts list blank
-            if (response.Items is null) {
+            try
+            {
+                AmazonAuthentication auth = new AmazonAuthentication();
+                auth.AccessKey = accessKey;
+                auth.SecretKey = secretKey;
+                AmazonWrapper wrapper = new AmazonWrapper(auth, AmazonEndpoint.US, "wyrecorp-20");
+
+                var response = wrapper.Lookup(itemUPC);
+                //if the item array is null then there are no items to retreive and return the prodcuts list blank
+                if (response.Items is null)
+                {
+                    return products;
+                }
+
+
+                foreach (var item in response.Items.Item)
+                {
+                    String desc = "";
+                    //ioslate any null pointer errors in the description variable
+                    try
+                    {
+                        //parse all of the item features together to create a description for the product
+                        foreach (String line in item.ItemAttributes.Feature)
+                        {
+                            desc = desc + line + Environment.NewLine;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("Error reading description from amazon in amazon api. Error Message" + ex.Message);
+                        desc = "No description available";
+                    }
+                    //create the new product only if the lowest price for this version of the product is not null, because if it null that means that there is no price
+                    if (!(item.OfferSummary.LowestNewPrice is null))
+                    {
+                        AmazonProduct product = new AmazonProduct
+                        {
+                            Name = item.ItemAttributes.Title ?? "No Title Available",
+                            Merchant = "Amazon",
+                            Description = desc ?? "No Description Available",
+                            UPC = item.ItemAttributes.UPC ?? "No UPC Available",
+                            Condition = "New",
+                            Price = Double.Parse(item.OfferSummary.LowestNewPrice.Amount),
+                            FormattedPrice = item.OfferSummary.LowestNewPrice.FormattedPrice ?? "No Formatted Price Available",
+                            CurrentCurrency = item.OfferSummary.LowestNewPrice.CurrencyCode ?? "No Currency Code Available",
+                            Url = item.DetailPageURL ?? "No Url Available"
+                        };
+                        products.Add(product);
+                    }
+                    if (!(item.OfferSummary.LowestUsedPrice is null))
+                    {
+                        AmazonProduct productUsed = new AmazonProduct
+                        {
+                            Name = item.ItemAttributes.Title ?? "No Title Available",
+                            Merchant = "Amazon",
+                            Description = desc ?? "No Description Available",
+                            Condition = "Used",
+                            UPC = item.ItemAttributes.UPC ?? "No UPC Available",
+                            Price = Double.Parse(item.OfferSummary.LowestUsedPrice.Amount),
+                            FormattedPrice = item.OfferSummary.LowestUsedPrice.FormattedPrice ?? "No Formatted Price Available",
+                            CurrentCurrency = item.OfferSummary.LowestUsedPrice.CurrencyCode,
+                            Url = item.DetailPageURL ?? "No Url Available"
+                        };
+                        products.Add(productUsed);
+                    }
+                    if (!(item.OfferSummary.LowestRefurbishedPrice is null))
+                    {
+                        AmazonProduct productRefurb = new AmazonProduct
+                        {
+                            Name = item.ItemAttributes.Title ?? "No Title Available",
+                            Merchant = "Amazon",
+                            Description = desc ?? "No Description Available",
+                            UPC = item.ItemAttributes.UPC ?? "No UPC Available",
+                            //set the conditions based on the product type
+                            Condition = "Refurbished",
+                            //set the prices for the products from the lowest offers section
+                            Price = Double.Parse(item.OfferSummary.LowestRefurbishedPrice.Amount),
+                            //set the formatted price for each item      
+                            FormattedPrice = item.OfferSummary.LowestRefurbishedPrice.FormattedPrice ?? "No Formatted Price Available",
+                            //set the currency for each price           
+                            CurrentCurrency = item.OfferSummary.LowestRefurbishedPrice.CurrencyCode ?? "No Currency Code Available",
+                            Url = item.DetailPageURL ?? "No Url Available"
+                        };
+                        //add the three products to the list           
+                        products.Add(productRefurb);
+                    }
+                }
+                return products;
+            }catch (Exception ex){
+                Debug.WriteLine("Error when getting product information from the Amazon Api, please check api keys and upc and try again later. Error Message:" + ex.Message);
                 return products;
             }
-            foreach (var item in response.Items.Item)
-            {
-                //parse all of the item features together to create a description for the product
-                String desc = "";
-                foreach (String line in item.ItemAttributes.Feature)
-                {
-                    desc = desc + line + Environment.NewLine;
-                }
-                //create the new product only if the lowest price for this version of the product is not null, because if it null that means that there is no price
-                if (!(item.OfferSummary.LowestNewPrice is null)) {
-                    AmazonProduct product = new AmazonProduct
-                    {
-                        Name = item.ItemAttributes.Title ?? "No Title Available",
-                        Merchant = "Amazon",
-                        Description = desc ?? "No Description Available",
-                        UPC = item.ItemAttributes.UPC ?? "No UPC Available",
-                        Condition = "New",
-                        Price = Double.Parse(item.OfferSummary.LowestNewPrice.Amount),
-                        FormattedPrice = item.OfferSummary.LowestNewPrice.FormattedPrice ?? "No Formatted Price Available",
-                        CurrentCurrency = item.OfferSummary.LowestNewPrice.CurrencyCode ?? "No Currency Code Available",
-                        Url = item.DetailPageURL ?? "No Url Available"
-                    };
-                    products.Add(product);
-                }
-                if (!(item.OfferSummary.LowestUsedPrice is null))
-                {
-                    AmazonProduct productUsed = new AmazonProduct
-                    {
-                        Name = item.ItemAttributes.Title ?? "No Title Available",
-                        Merchant = "Amazon",
-                        Description = desc ?? "No Description Available",
-                        Condition = "Used",
-                        UPC = item.ItemAttributes.UPC ?? "No UPC Available",
-                        Price = Double.Parse(item.OfferSummary.LowestUsedPrice.Amount),
-                        FormattedPrice = item.OfferSummary.LowestUsedPrice.FormattedPrice ?? "No Formatted Price Available",
-                        CurrentCurrency = item.OfferSummary.LowestUsedPrice.CurrencyCode,
-                        Url = item.DetailPageURL ?? "No Url Available"
-                    };
-                    products.Add(productUsed);
-                }
-                if (!(item.OfferSummary.LowestRefurbishedPrice is null))
-                {
-                    AmazonProduct productRefurb = new AmazonProduct
-                    {
-                        Name = item.ItemAttributes.Title ?? "No Title Available",
-                        Merchant = "Amazon",
-                        Description = desc ?? "No Description Available",
-                        UPC = item.ItemAttributes.UPC ?? "No UPC Available",
-                        //set the conditions based on the product type
-                        Condition = "Refurbished",
-                        //set the prices for the products from the lowest offers section
-                        Price = Double.Parse(item.OfferSummary.LowestRefurbishedPrice.Amount),
-                        //set the formatted price for each item      
-                        FormattedPrice = item.OfferSummary.LowestRefurbishedPrice.FormattedPrice ?? "No Formatted Price Available",
-                        //set the currency for each price           
-                        CurrentCurrency = item.OfferSummary.LowestRefurbishedPrice.CurrencyCode ?? "No Currency Code Available",
-                        Url = item.DetailPageURL ?? "No Url Available"
-                    };
-                    //add the three products to the list           
-                    products.Add(productRefurb);
-                }
-            }
-            return products;
         }
 
    
