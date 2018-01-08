@@ -6,6 +6,8 @@
 
   <ItemGroup>
     <Folder Include="API\Amazon\" />
+    <Folder Include="Infastructure\" />
+    <Folder Include="Infastructure\ExtensionMethods\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />

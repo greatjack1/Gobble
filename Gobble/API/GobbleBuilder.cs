@@ -4,7 +4,10 @@ using Gobble.Keys;
 using Gobble.Products;
 using Gobble.Providers;
 using System.Threading.Tasks;
-
+using System.Threading;
+using System.Collections.Concurrent;
+using System.Linq;
+using Gobble.Infastructure.ExtensionMethods;
 namespace Gobble.API
 {
     public class GobbleBuilder
@@ -14,17 +17,20 @@ namespace Gobble.API
         private String mUPC = "";
         public GobbleBuilder()
         {
-            
+
         }
-        public GobbleBuilder AddProviderList(List<Provider> providers){
+        public GobbleBuilder AddProviderList(List<Provider> providers)
+        {
             mProviders = providers;
             return this;
         }
-        public GobbleBuilder AddKeystore(IApiKeystore store){
+        public GobbleBuilder AddKeystore(IApiKeystore store)
+        {
             keystore = store;
             return this;
         }
-        public GobbleBuilder SetUPC(String UPC) {
+        public GobbleBuilder SetUPC(String UPC)
+        {
             mUPC = UPC;
             return this;
         }
@@ -33,7 +39,8 @@ namespace Gobble.API
         /// It is used to retreive prices of a item using the upc, provider list and api keys that were provided
         /// </summary>
         /// <returns></returns>
-        public async Task<List<IProduct>> GetProductsAsync() {
+        public async Task<List<IProduct>> GetProductsAsync()
+        {
             Task<List<IProduct>> task = new Task<List<IProduct>>(() =>
             {
                 return InternalGetProducts();
@@ -47,7 +54,8 @@ namespace Gobble.API
         ///  It is used to retreive prices of a item using the upc, provider list and api keys that were provided
         /// </summary>
         /// <returns></returns>
-        public List<IProduct> GetProducts() {
+        public List<IProduct> GetProducts()
+        {
             return InternalGetProducts();
         }
         /// <summary>
@@ -56,9 +64,12 @@ namespace Gobble.API
         /// We require to versions of the public method so that we can make one Async for people using the api in such patterns
         /// </summary>
         /// <returns></returns>
-        private List<IProduct> InternalGetProducts() {
-            List<IProduct> products = new List<IProduct>();
-            foreach (Provider prov in mProviders)
+        private List<IProduct> InternalGetProducts()
+        {
+            //use a concurrent bag for the products since the loop is multi threaded
+            ConcurrentBag<IProduct> products = new ConcurrentBag<IProduct>();
+            //use a parallel for each to improve response time
+            Parallel.ForEach(mProviders, (prov) =>
             {
                 switch (prov)
                 {
@@ -83,15 +94,18 @@ namespace Gobble.API
                     case Provider.Walmart:
                         IProvider WalmartProvider = new Walmart.WalmartApi();
                         WalmartProvider.setApiKeys(keystore.getKey(Provider.Walmart));
-                       WalmartProvider.setUPC(mUPC);
+                        WalmartProvider.setUPC(mUPC);
                         products.AddRange(WalmartProvider.QueryProducts());
                         break;
 
                 }
-            }
-            return products;
-
+            });
+            //use the to list method since we used a concurrentbag and need to return a list
+            return products.ToList();
         }
-       
+
+
     }
+
 }
+
