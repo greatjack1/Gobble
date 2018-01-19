@@ -15,7 +15,8 @@ namespace GobblePlayground
             List<Provider> providers = new List<Provider>();
             providers.Add(Provider.Walmart);
             Dictionary<String, String> keys = new Dictionary<string, string>();
-          
+            keys.Add("apikey", "2g4nj8ff38a5z2fkjbv9828m");
+        
             BasicKeyStore store = new BasicKeyStore();
             store.addKey(Gobble.Providers.Provider.Walmart, keys);
             var products =  new GobbleBuilder().AddKeystore(store).AddProviderList(providers).SetUPC("888462762670").GetProducts();
@@ -38,7 +39,7 @@ namespace GobblePlayground
             });
             //display them
             foreach (var prod in products) {
-                Console.WriteLine("Name: " + prod.Name + " Price:" + prod.FormattedPrice + " Condition: " + prod.Condition);
+                Console.WriteLine("Name: " + prod.Name + " Price:" + prod.Price + " Condition: " + prod.Condition);
             }
             Console.ReadLine();
         }

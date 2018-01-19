@@ -74,7 +74,7 @@ namespace Gobble.API.Amazon
                             Description = desc ?? "No Description Available",
                             UPC = item.ItemAttributes.UPC ?? "No UPC Available",
                             Condition = "New",
-                            Price = Double.Parse(item.OfferSummary.LowestNewPrice.Amount),
+                            Price = Double.Parse(item.OfferSummary.LowestNewPrice.FormattedPrice.Substring(1)),
                             FormattedPrice = item.OfferSummary.LowestNewPrice.FormattedPrice ?? "No Formatted Price Available",
                             CurrentCurrency = item.OfferSummary.LowestNewPrice.CurrencyCode ?? "No Currency Code Available",
                             Url = item.DetailPageURL ?? "No Url Available"
@@ -90,7 +90,7 @@ namespace Gobble.API.Amazon
                             Description = desc ?? "No Description Available",
                             Condition = "Used",
                             UPC = item.ItemAttributes.UPC ?? "No UPC Available",
-                            Price = Double.Parse(item.OfferSummary.LowestUsedPrice.Amount),
+                            Price = Double.Parse(item.OfferSummary.LowestUsedPrice.FormattedPrice.Substring(1)),
                             FormattedPrice = item.OfferSummary.LowestUsedPrice.FormattedPrice ?? "No Formatted Price Available",
                             CurrentCurrency = item.OfferSummary.LowestUsedPrice.CurrencyCode,
                             Url = item.DetailPageURL ?? "No Url Available"
@@ -108,7 +108,7 @@ namespace Gobble.API.Amazon
                             //set the conditions based on the product type
                             Condition = "Refurbished",
                             //set the prices for the products from the lowest offers section
-                            Price = Double.Parse(item.OfferSummary.LowestRefurbishedPrice.Amount),
+                            Price = Double.Parse(item.OfferSummary.LowestRefurbishedPrice.FormattedPrice.Substring(1)),
                             //set the formatted price for each item      
                             FormattedPrice = item.OfferSummary.LowestRefurbishedPrice.FormattedPrice ?? "No Formatted Price Available",
                             //set the currency for each price           
