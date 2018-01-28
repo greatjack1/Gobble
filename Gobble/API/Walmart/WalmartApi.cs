@@ -4,7 +4,7 @@ using System.Text;
 using Gobble.Products;
 using Newtonsoft.Json;
 using System.Diagnostics;
-
+//walmart vsn of provider
 namespace Gobble.API.Walmart
 {
     class WalmartApi : Providers.BaseProvider
