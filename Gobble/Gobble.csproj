@@ -11,6 +11,7 @@
     <Folder Include="API\Amazon\" />
     <Folder Include="Infastructure\" />
     <Folder Include="Infastructure\ExtensionMethods\" />
+    <Folder Include="API\Overstock\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />

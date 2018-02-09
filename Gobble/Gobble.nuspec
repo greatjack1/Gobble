@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>com.wyre.gobble</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>WYRE corp</authors>
+    <owners>WYRE corp</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>Initial Release of Gobble</releaseNotes>
+    <copyright>Copyright 2018</copyright>
+    <tags>Price Comparison Api</tags>
+  </metadata>
+</package>

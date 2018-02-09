@@ -71,31 +71,37 @@ namespace Gobble.API
             //use a parallel for each to improve response time
             Parallel.ForEach(mProviders, (prov) =>
             {
+                IProvider provider;
                 switch (prov)
                 {
+                    
                     case Provider.Amazon:
-                        IProvider provider = new Amazon.AmazonApi();
+                        provider = new Amazon.AmazonApi();
                         provider.setApiKeys(keystore.getKey(Provider.Amazon));
                         provider.setUPC(mUPC);
                         products.AddRange(provider.QueryProducts());
                         break;
                     case Provider.Ebay:
-                        IProvider EbayProvider = new Ebay.EbayApi();
-                        EbayProvider.setApiKeys(keystore.getKey(Provider.Ebay));
-                        EbayProvider.setUPC(mUPC);
-                        products.AddRange(EbayProvider.QueryProducts());
+                        provider = new Ebay.EbayApi();
+                        provider.setApiKeys(keystore.getKey(Provider.Ebay));
+                        provider.setUPC(mUPC);
+                        products.AddRange(provider.QueryProducts());
                         break;
-                    case Provider.Jet:
+                    case Provider.BestBuy:
+                        provider = new BestBuy.BestBuy_Api();
+                        provider.setApiKeys(keystore.getKey(Provider.BestBuy));
+                        provider.setUPC(mUPC);
+                        products.AddRange(provider.QueryProducts());
                         break;
                     case Provider.Kohls:
                         break;
                     case Provider.Target:
                         break;
                     case Provider.Walmart:
-                        IProvider WalmartProvider = new Walmart.WalmartApi();
-                        WalmartProvider.setApiKeys(keystore.getKey(Provider.Walmart));
-                        WalmartProvider.setUPC(mUPC);
-                        products.AddRange(WalmartProvider.QueryProducts());
+                        provider = new Walmart.WalmartApi();
+                        provider.setApiKeys(keystore.getKey(Provider.Walmart));
+                        provider.setUPC(mUPC);
+                        products.AddRange(provider.QueryProducts());
                         break;
 
                 }

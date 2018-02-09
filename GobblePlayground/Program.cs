@@ -13,11 +13,11 @@ namespace GobblePlayground
         {
             Console.WriteLine("Running Gobble Playground");
             List<Provider> providers = new List<Provider>();
-            providers.Add(Provider.Walmart);
+            providers.Add(Provider.BestBuy);
             Dictionary<String, String> keys = new Dictionary<string, string>();
             BasicKeyStore store = new BasicKeyStore();
-            store.addKey(Gobble.Providers.Provider.Walmart, keys);
-            var products =  new GobbleBuilder().AddKeystore(store).AddProviderList(providers).SetUPC("888462762670").GetProducts();
+            store.addKey(Gobble.Providers.Provider.BestBuy, keys);
+            var products =  new GobbleBuilder().AddKeystore(store).AddProviderList(providers).SetUPC("190198342560ds").GetProducts();
             Console.WriteLine("Writing products");
             //sort by price
             products.Sort((n, m) =>
