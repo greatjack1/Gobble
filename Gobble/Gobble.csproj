@@ -5,13 +5,18 @@
     <Description>The ultimate .net price comparison api</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>1.0.3</Version>
+    <PackOnBuild>true</PackOnBuild>
+    <PackageVersion>1.0.4</PackageVersion>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType></DebugType>
+  </PropertyGroup>
   <ItemGroup>
     <Folder Include="API\Amazon\" />
     <Folder Include="Infastructure\" />
     <Folder Include="Infastructure\ExtensionMethods\" />
-    <Folder Include="API\Overstock\" />
+    <Folder Include="API\FlipCast\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />

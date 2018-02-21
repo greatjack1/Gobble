@@ -1,10 +1,8 @@
 ﻿using System;
 using Gobble.Keys;
-using System.Linq;
 using System.Collections.Generic;
 using Gobble.API;
 using Gobble.Providers;
-using System.Threading.Tasks;
 namespace GobblePlayground
 {
     class Program

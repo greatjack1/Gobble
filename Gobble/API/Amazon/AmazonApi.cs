@@ -67,7 +67,7 @@ namespace Gobble.API.Amazon
                     //create the new product only if the lowest price for this version of the product is not null, because if it null that means that there is no price
                     if (!(item.OfferSummary.LowestNewPrice is null))
                     {
-                        AmazonProduct product = new AmazonProduct
+                       BaseProduct product = new BaseProduct()
                         {
                             Name = item.ItemAttributes.Title ?? "No Title Available",
                             Merchant = "Amazon",
@@ -83,7 +83,7 @@ namespace Gobble.API.Amazon
                     }
                     if (!(item.OfferSummary.LowestUsedPrice is null))
                     {
-                        AmazonProduct productUsed = new AmazonProduct
+                        BaseProduct productUsed = new BaseProduct()
                         {
                             Name = item.ItemAttributes.Title ?? "No Title Available",
                             Merchant = "Amazon",
@@ -99,7 +99,7 @@ namespace Gobble.API.Amazon
                     }
                     if (!(item.OfferSummary.LowestRefurbishedPrice is null))
                     {
-                        AmazonProduct productRefurb = new AmazonProduct
+                        BaseProduct productRefurb = new BaseProduct()
                         {
                             Name = item.ItemAttributes.Title ?? "No Title Available",
                             Merchant = "Amazon",

@@ -19,7 +19,7 @@ namespace Gobble.API.Walmart
                 {
                     if (item.Stock != "Not available")
                     {
-                        WalmartProduct prod = new WalmartProduct
+                        BaseProduct prod = new BaseProduct()
                         {
                             Name = item.Name,
                             Condition = "No Condition Available",
