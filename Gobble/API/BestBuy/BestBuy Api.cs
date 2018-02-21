@@ -25,6 +25,7 @@ namespace Gobble.API.BestBuy
                         UPC = item.Upc,
                         Description = item.ShortDescription,
                         Price = item.SalePrice + item.ShippingCost,
+                        Merchant = "BestBuy",
                         FormattedPrice = "$" + (item.SalePrice + item.ShippingCost)
                     };
                     products.Add(prod);
